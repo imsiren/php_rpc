@@ -21,6 +21,7 @@
 	}\
 }while(0);
 
+/*
 #define PHP_RPC_LIST_DESTROY(desc) do{\
 	if((desc)){\
 		PHP_RPC_LIST_DESTROY((desc->next));\
@@ -28,6 +29,14 @@
 		(desc)->next=NULL;\
 	}\
 }while(0);
+*/
+void php_rpc_list_destroy(struct _php_rpc_curl_list *desc){
+	if(desc){
+		php_rpc_list_destroy(desc);
+		free(desc);
+		desc->next=NULL;
+	}
+}
 
 typedef struct _php_rpc_curl_t php_rpc_curl_t;
 typedef struct _php_rpc_curl_multi_t php_rpc_curl_multi_t;

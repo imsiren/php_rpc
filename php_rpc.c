@@ -73,7 +73,7 @@ void php_rpc_curl_multi_close(php_rpc_curl_multi_t *curl_multi_t){
 	php_rpc_curl_multi_data_t* curl_multi_data=curl_multi_t->data;
 
 	curl_multi_cleanup(curl_multi_data->cm);
-	PHP_RPC_LIST_DESTROY(curl_multi_data->list);
+	php_rpc_list_destroy(curl_multi_data->list);
 }
 void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){
 	php_rpc_curl_multi_data_t* curl_multi_data=curl_multi_t->data;
