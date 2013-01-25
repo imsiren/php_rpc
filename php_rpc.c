@@ -1,6 +1,4 @@
 #include "php_rpc.h"
-/****jjjjj/
-/****/
 /************************CURL EASY********************/
 void php_rpc_curl_init(php_rpc_curl_t **curl_t){
 	if(*curl_t==NULL){
@@ -10,15 +8,19 @@ void php_rpc_curl_init(php_rpc_curl_t **curl_t){
 		(*curl_t)->exec=php_rpc_curl_exec;
 
 
-		php_rpc_data_t *data=(php_rpc_data_t*)malloc(sizeof(php_rpc_data_t));
+		php_rpc_data_t *data=NULL;
+		CURL *cp=NULL;
+		data=(php_rpc_data_t*)malloc(sizeof(php_rpc_data_t*));
 		(*curl_t)->data=data;
-	
-		data->cp=curl_easy_init();
-		data->url="";
-		data->buf=NULL;
+		data->cp=cp;
+		{
+			cp=curl_easy_init();
+			data->url="";
+			data->buf=NULL;
 
-		curl_easy_setopt(data->cp,CURLOPT_WRITEFUNCTION,php_rpc_write_handle);
-		curl_easy_setopt(data->cp,CURLOPT_WRITEDATA,&data);	
+			curl_easy_setopt(data->cp,CURLOPT_WRITEFUNCTION,php_rpc_write_handle);
+			curl_easy_setopt(data->cp,CURLOPT_WRITEDATA,&data);	
+		}
 	}			
 }
 void php_rpc_curl_destroy(php_rpc_curl_t *curl_t){
@@ -49,9 +51,9 @@ void php_rpc_curl_exec(php_rpc_curl_t *curl_t){
 void php_rpc_curl_multi_init(php_rpc_curl_multi_t **curl_multi_t){
 	if(*curl_multi_t==NULL){
 		(*curl_multi_t)=(php_rpc_curl_multi_t*)malloc(sizeof(php_rpc_curl_multi_t*));
-		(*curl_multi_t)->add=php_rpc_curl_multi_add;
-		(*curl_multi_t)->exec=php_rpc_curl_multi_exec;
-		(*curl_multi_t)->close=php_rpc_curl_multi_close;
+		(*curl_multi_t)->add	=php_rpc_curl_multi_add;
+		(*curl_multi_t)->exec	=php_rpc_curl_multi_exec;
+		(*curl_multi_t)->destroy=php_rpc_curl_multi_destroy;
 
 		php_rpc_curl_multi_data_t *data=(php_rpc_curl_multi_data_t*)malloc(sizeof(php_rpc_curl_multi_data_t));
 		(*curl_multi_t)->data=data;
@@ -61,7 +63,7 @@ void php_rpc_curl_multi_init(php_rpc_curl_multi_t **curl_multi_t){
 }
 
 void php_rpc_curl_multi_add(php_rpc_curl_multi_t *curl_multi_t,php_rpc_curl_t *curl_t){
-	php_rpc_curl_multi_data_t* curl_multi_data=curl_multi_t->data;
+	php_rpc_curl_multi_data_t* curl_multi_data=(php_rpc_curl_multi_data_t*)curl_multi_t->data;
 	php_rpc_data_t *curl_data=curl_t->data;
 	CURLcode code=curl_multi_add_handle(curl_multi_data->cm,curl_data->cp);
 	if(code!=CURLE_OK){
@@ -69,14 +71,13 @@ void php_rpc_curl_multi_add(php_rpc_curl_multi_t *curl_multi_t,php_rpc_curl_t *c
 	}
 }
 
-void php_rpc_curl_multi_close(php_rpc_curl_multi_t *curl_multi_t){
-	php_rpc_curl_multi_data_t* curl_multi_data=curl_multi_t->data;
-
+void php_rpc_curl_multi_destroy(php_rpc_curl_multi_t *curl_multi_t){
+	php_rpc_curl_multi_data_t* curl_multi_data=(php_rpc_curl_multi_data_t*)curl_multi_t->data;
 	curl_multi_cleanup(curl_multi_data->cm);
-	php_rpc_list_destroy(curl_multi_data->list);
+//	php_rpc_list_destroy(curl_multi_data->list);
 }
 void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){
-	php_rpc_curl_multi_data_t* curl_multi_data=curl_multi_t->data;
+	php_rpc_curl_multi_data_t* curl_multi_data=(php_rpc_curl_multi_data_t*)curl_multi_t->data;
 	int still;	
 	struct timeval tv;
 	tv.tv_sec=1;
@@ -104,14 +105,35 @@ size_t php_rpc_write_handle(char *buf,size_t size,size_t nmemp,void *userp){
 	printf("%s\n",buf);
 	return len;
 }
+void php_rpc_list_destroy(php_rpc_curl_list *list){
+	if(list){
+		php_rpc_list_destroy(list->next);
+		free(list);
+		list->next=NULL;
+	}
+}
+
 
 int main(int argc,char **argv){
+
+	char url[]="http://www.taobao.com";
+	php_rpc_curl_multi_t *curl_multi_t=NULL;
+	php_rpc_curl_multi_init(&curl_multi_t);
+
+	php_rpc_curl_t *curl_t=NULL;
+	CURL *cp=curl_easy_init();
+	php_rpc_curl_init(&curl_t);
+/*  
+	php_rpc_curl_t *curl_t=NULL;
+	curl_t->open(curl_t,url,10);
+	curl_multi_t->add(curl_multi_t,curl_t);
 	php_rpc_curl_t *curl_t;
 	php_rpc_curl_init(&curl_t);
-	char url[]="http://www.taobao.com";
 	curl_t->open(curl_t,url,10);
 	curl_t->exec(curl_t);
 	php_rpc_curl_destroy(curl_t);
+	*/
+	curl_multi_t->destroy(curl_multi_t);
 	return 0;
 }
 
