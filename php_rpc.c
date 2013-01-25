@@ -1,4 +1,5 @@
 #include "php_rpc.h"
+/****/
 /************************CURL EASY********************/
 void php_rpc_curl_init(php_rpc_curl_t **curl_t){
 	if(*curl_t==NULL){
