@@ -56,7 +56,7 @@ struct _php_rpc_curl_multi_t{
 	void *data;
 	void (*add)(php_rpc_curl_multi_t *,php_rpc_curl_t*);
 	void (*exec)(php_rpc_curl_multi_t *);
-	void (*destroy)(php_rpc_curl_multi_t *curl_multi_t);
+	void (*close)(php_rpc_curl_multi_t *curl_multi_t);
 };
 
 struct _php_rpc_curl_list{

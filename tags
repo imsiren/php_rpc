@@ -1,0 +1,72 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+PHP_RPC_LIST_APPEND	php_rpc.h	15;"	d
+PHP_RPC_LIST_INIT	php_rpc.h	9;"	d
+_php_rpc_curl_list	php_rpc.h	/^struct _php_rpc_curl_list{$/;"	s
+_php_rpc_curl_list::curl_p	php_rpc.h	/^	php_rpc_curl_t *curl_p;$/;"	m	struct:_php_rpc_curl_list	access:public
+_php_rpc_curl_list::next	php_rpc.h	/^	php_rpc_curl_list *next;$/;"	m	struct:_php_rpc_curl_list	access:public
+_php_rpc_curl_multi_data_t	php_rpc.h	/^typedef struct _php_rpc_curl_multi_data_t{$/;"	s
+_php_rpc_curl_multi_data_t::cm	php_rpc.h	/^	CURLM *cm;$/;"	m	struct:_php_rpc_curl_multi_data_t	access:public
+_php_rpc_curl_multi_data_t::list	php_rpc.h	/^	php_rpc_curl_list *list;$/;"	m	struct:_php_rpc_curl_multi_data_t	access:public
+_php_rpc_curl_multi_t	php_rpc.h	/^struct _php_rpc_curl_multi_t{$/;"	s
+_php_rpc_curl_multi_t::add	php_rpc.h	/^	void (*add)(php_rpc_curl_multi_t *,php_rpc_curl_t*);$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+_php_rpc_curl_multi_t::data	php_rpc.h	/^	void *data;$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+_php_rpc_curl_multi_t::destroy	php_rpc.h	/^	void (*destroy)(php_rpc_curl_multi_t *curl_multi_t);$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+_php_rpc_curl_multi_t::exec	php_rpc.h	/^	void (*exec)(php_rpc_curl_multi_t *);$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+_php_rpc_curl_t	php_rpc.h	/^struct _php_rpc_curl_t{$/;"	s
+_php_rpc_curl_t::data	php_rpc.h	/^	void *data;	$/;"	m	struct:_php_rpc_curl_t	access:public
+_php_rpc_curl_t::exec	php_rpc.h	/^	void (*exec)(php_rpc_curl_t *);$/;"	m	struct:_php_rpc_curl_t	access:public
+_php_rpc_curl_t::open	php_rpc.h	/^	void (*open)(php_rpc_curl_t *,char *url,int timeout);	$/;"	m	struct:_php_rpc_curl_t	access:public
+_php_rpc_curl_t::setopt	php_rpc.h	/^	void (*setopt)(php_rpc_curl_t *,CURLoption op,void *val);$/;"	m	struct:_php_rpc_curl_t	access:public
+_php_rpc_data_t	php_rpc.h	/^typedef struct _php_rpc_data_t{$/;"	s
+_php_rpc_data_t::buf	php_rpc.h	/^	char *buf;$/;"	m	struct:_php_rpc_data_t	access:public
+_php_rpc_data_t::cp	php_rpc.h	/^	CURL *cp;$/;"	m	struct:_php_rpc_data_t	access:public
+_php_rpc_data_t::len	php_rpc.h	/^	int len;$/;"	m	struct:_php_rpc_data_t	access:public
+_php_rpc_data_t::url	php_rpc.h	/^	char *url;$/;"	m	struct:_php_rpc_data_t	access:public
+add	php_rpc.h	/^	void (*add)(php_rpc_curl_multi_t *,php_rpc_curl_t*);$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+buf	php_rpc.h	/^	char *buf;$/;"	m	struct:_php_rpc_data_t	access:public
+cm	php_rpc.h	/^	CURLM *cm;$/;"	m	struct:_php_rpc_curl_multi_data_t	access:public
+cp	php_rpc.h	/^	CURL *cp;$/;"	m	struct:_php_rpc_data_t	access:public
+curl_p	php_rpc.h	/^	php_rpc_curl_t *curl_p;$/;"	m	struct:_php_rpc_curl_list	access:public
+data	php_rpc.h	/^	void *data;	$/;"	m	struct:_php_rpc_curl_t	access:public
+data	php_rpc.h	/^	void *data;$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+destroy	php_rpc.h	/^	void (*destroy)(php_rpc_curl_multi_t *curl_multi_t);$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+exec	php_rpc.h	/^	void (*exec)(php_rpc_curl_multi_t *);$/;"	m	struct:_php_rpc_curl_multi_t	access:public
+exec	php_rpc.h	/^	void (*exec)(php_rpc_curl_t *);$/;"	m	struct:_php_rpc_curl_t	access:public
+len	php_rpc.h	/^	int len;$/;"	m	struct:_php_rpc_data_t	access:public
+list	php_rpc.h	/^	php_rpc_curl_list *list;$/;"	m	struct:_php_rpc_curl_multi_data_t	access:public
+main	php_rpc.c	/^int main(int argc,char **argv){$/;"	f	signature:(int argc,char **argv)
+next	php_rpc.h	/^	php_rpc_curl_list *next;$/;"	m	struct:_php_rpc_curl_list	access:public
+open	php_rpc.h	/^	void (*open)(php_rpc_curl_t *,char *url,int timeout);	$/;"	m	struct:_php_rpc_curl_t	access:public
+php_rpc_curl_destroy	php_rpc.c	/^void php_rpc_curl_destroy(php_rpc_curl_t *curl_t){$/;"	f	signature:(php_rpc_curl_t *curl_t)
+php_rpc_curl_exec	php_rpc.c	/^void php_rpc_curl_exec(php_rpc_curl_t *curl_t){$/;"	f	signature:(php_rpc_curl_t *curl_t)
+php_rpc_curl_exec	php_rpc.h	/^void php_rpc_curl_exec(php_rpc_curl_t *);$/;"	p	signature:(php_rpc_curl_t *)
+php_rpc_curl_init	php_rpc.c	/^void php_rpc_curl_init(php_rpc_curl_t **curl_t){$/;"	f	signature:(php_rpc_curl_t **curl_t)
+php_rpc_curl_init	php_rpc.h	/^void php_rpc_curl_init(php_rpc_curl_t **curl_t);$/;"	p	signature:(php_rpc_curl_t **curl_t)
+php_rpc_curl_list	php_rpc.h	/^typedef struct _php_rpc_curl_list php_rpc_curl_list;$/;"	t	typeref:struct:_php_rpc_curl_list
+php_rpc_curl_multi_add	php_rpc.c	/^void php_rpc_curl_multi_add(php_rpc_curl_multi_t *curl_multi_t,php_rpc_curl_t *curl_t){$/;"	f	signature:(php_rpc_curl_multi_t *curl_multi_t,php_rpc_curl_t *curl_t)
+php_rpc_curl_multi_add	php_rpc.h	/^void php_rpc_curl_multi_add(php_rpc_curl_multi_t *,php_rpc_curl_t*);$/;"	p	signature:(php_rpc_curl_multi_t *,php_rpc_curl_t*)
+php_rpc_curl_multi_data_t	php_rpc.h	/^}php_rpc_curl_multi_data_t;$/;"	t	typeref:struct:_php_rpc_curl_multi_data_t
+php_rpc_curl_multi_destroy	php_rpc.c	/^void php_rpc_curl_multi_destroy(php_rpc_curl_multi_t *curl_multi_t){$/;"	f	signature:(php_rpc_curl_multi_t *curl_multi_t)
+php_rpc_curl_multi_destroy	php_rpc.h	/^void php_rpc_curl_multi_destroy(php_rpc_curl_multi_t *curl_multi_t);$/;"	p	signature:(php_rpc_curl_multi_t *curl_multi_t)
+php_rpc_curl_multi_exec	php_rpc.c	/^void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){$/;"	f	signature:(php_rpc_curl_multi_t *curl_multi_t)
+php_rpc_curl_multi_exec	php_rpc.h	/^void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *);$/;"	p	signature:(php_rpc_curl_multi_t *)
+php_rpc_curl_multi_init	php_rpc.c	/^void php_rpc_curl_multi_init(php_rpc_curl_multi_t **curl_multi_t){$/;"	f	signature:(php_rpc_curl_multi_t **curl_multi_t)
+php_rpc_curl_multi_init	php_rpc.h	/^void php_rpc_curl_multi_init(php_rpc_curl_multi_t **);$/;"	p	signature:(php_rpc_curl_multi_t **)
+php_rpc_curl_multi_t	php_rpc.h	/^typedef struct _php_rpc_curl_multi_t php_rpc_curl_multi_t;$/;"	t	typeref:struct:_php_rpc_curl_multi_t
+php_rpc_curl_open	php_rpc.c	/^void php_rpc_curl_open(php_rpc_curl_t *curl_t,char *url,int timeout){$/;"	f	signature:(php_rpc_curl_t *curl_t,char *url,int timeout)
+php_rpc_curl_open	php_rpc.h	/^void php_rpc_curl_open(php_rpc_curl_t *curl_t,char *url,int timeout);$/;"	p	signature:(php_rpc_curl_t *curl_t,char *url,int timeout)
+php_rpc_curl_setopt	php_rpc.c	/^void php_rpc_curl_setopt(php_rpc_curl_t *curl_t,CURLoption op,void *val){$/;"	f	signature:(php_rpc_curl_t *curl_t,CURLoption op,void *val)
+php_rpc_curl_setopt	php_rpc.h	/^void php_rpc_curl_setopt(php_rpc_curl_t *,CURLoption op,void *val);$/;"	p	signature:(php_rpc_curl_t *,CURLoption op,void *val)
+php_rpc_curl_t	php_rpc.h	/^typedef struct _php_rpc_curl_t php_rpc_curl_t;$/;"	t	typeref:struct:_php_rpc_curl_t
+php_rpc_data_t	php_rpc.h	/^}php_rpc_data_t;$/;"	t	typeref:struct:_php_rpc_data_t
+php_rpc_list_destroy	php_rpc.c	/^void php_rpc_list_destroy(php_rpc_curl_list *list){$/;"	f	signature:(php_rpc_curl_list *list)
+php_rpc_list_destroy	php_rpc.h	/^void php_rpc_list_destroy(php_rpc_curl_list *list);$/;"	p	signature:(php_rpc_curl_list *list)
+php_rpc_write_handle	php_rpc.c	/^size_t php_rpc_write_handle(char *buf,size_t size,size_t nmemp,void *userp){$/;"	f	signature:(char *buf,size_t size,size_t nmemp,void *userp)
+php_rpc_write_handle	php_rpc.h	/^size_t php_rpc_write_handle(char *buf,size_t len,size_t nmemp,void *userp);$/;"	p	signature:(char *buf,size_t len,size_t nmemp,void *userp)
+setopt	php_rpc.h	/^	void (*setopt)(php_rpc_curl_t *,CURLoption op,void *val);$/;"	m	struct:_php_rpc_curl_t	access:public
+url	php_rpc.h	/^	char *url;$/;"	m	struct:_php_rpc_data_t	access:public
