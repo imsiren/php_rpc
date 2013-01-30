@@ -4,6 +4,21 @@
 #include <curl/curl.h>
 #include <sys/select.h>
 #include <time.h>
+#include <sys/types.h>
+#include <unistd.h>
+#define PHP_RPC_EPOLL 
+#define MAX_EPOLL_EVENTS 50
+#ifdef PHP_RPC_EPOLL
+	#include <sys/epoll.h>
+#else
+	#include <sys/types.h>
+#endif
+	typedef struct _php_epoll_data_t{
+		int epoll_fd;
+		int still;
+		CURLM *cm;
+	}php_epoll_data_t;
+
 typedef struct _php_rpc_curl_list php_rpc_curl_list;
 
 #define PHP_RPC_LIST_INIT(desc) do{\
@@ -78,5 +93,6 @@ void php_rpc_curl_multi_destroy(php_rpc_curl_multi_t *curl_multi_t);
 
 void php_rpc_list_destroy(php_rpc_curl_list *list);
 
+int php_rpc_multi_socket(CURL *easy, /*  easy handle */   curl_socket_t s, /*  socket */   int action, /*  see values below */   void *userp, /*  private callback pointer */   void *socketp); 
 
 #endif //PHP_RPC_H
