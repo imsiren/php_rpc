@@ -1,7 +1,7 @@
 #include "php_rpc.h"
 /************************CURL EASY********************/
 void php_rpc_curl_init(php_rpc_curl_t **curl_t){
-	if(*curl_t==NULL){
+	//if(*curl_t==NULL){
 		(*curl_t)=(php_rpc_curl_t*)malloc(sizeof(php_rpc_curl_t));
 		(*curl_t)->open=php_rpc_curl_open;
 		(*curl_t)->setopt=php_rpc_curl_setopt;
@@ -21,7 +21,7 @@ void php_rpc_curl_init(php_rpc_curl_t **curl_t){
 			curl_easy_setopt(data->cp,CURLOPT_WRITEFUNCTION,php_rpc_write_handle);
 			curl_easy_setopt(data->cp,CURLOPT_WRITEDATA,&data);	
 		}
-	}			
+//	}			
 }
 void php_rpc_curl_destroy(php_rpc_curl_t *curl_t){
 	php_rpc_data_t *data=curl_t->data;
@@ -83,10 +83,11 @@ void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){
 	tv.tv_sec=1;
 	tv.tv_usec=0;
 	#ifdef PHP_RPC_EPOLL
-		struct epoll_event ev,events[MAX_EPOLL_EVENTS];	
+		struct epoll_event ev,*events;//[MAX_EPOLL_EVENTS];	
 		int epoll_fd,nfds;
 		php_epoll_data_t *epoll_data;
 
+		events=(struct epoll_event*)malloc(sizeof(struct epoll_event)*MAX_EPOLL_EVENTS);
 		epoll_data=(php_epoll_data_t*)malloc(sizeof(php_epoll_data_t));
 		epoll_data->cm=curl_multi_data->cm;
 
@@ -102,7 +103,7 @@ void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){
 	#else
 		while(CURLM_CALL_MULTI_PERFORM==curl_multi_perform(curl_multi_data->cm,&still));
 	#endif
-	ret_count=still;
+		ret_count=still;
 	while(still){
 		#ifdef PHP_RPC_EPOLL
 			int i=0;
@@ -141,11 +142,11 @@ int php_rpc_multi_socket(CURL *easy, /*  easy handle */   curl_socket_t s, /*  s
 		--epoll_data->still;
 		ev.data.fd=s;
 		ev.events=EPOLLIN;
-		epoll_ctl(ev.data.fd,EPOLL_CTL_DEL,s,&ev);
+		epoll_ctl(epoll_data->epoll_fd,EPOLL_CTL_DEL,s,&ev);
 	}else{
 		ev.data.fd=s;
 		ev.events=EPOLLIN;
-		epoll_ctl(ev.data.fd,EPOLL_CTL_ADD,s,&ev);
+		epoll_ctl(epoll_data->epoll_fd,EPOLL_CTL_ADD,s,&ev);
 		curl_multi_assign(epoll_data->cm,s,socketp);
 	}
 	return 0;
@@ -169,13 +170,13 @@ void php_rpc_list_destroy(php_rpc_curl_list *list){
 
 int main(int argc,char **argv){
 
-	char url[]="http://www.google.com";
+	char url[]="http://www.imsiren.com";
 	php_rpc_curl_multi_t *curl_multi_t=NULL;
 	php_rpc_curl_multi_init(&curl_multi_t);
 
 	php_rpc_curl_t *curl_t=NULL;
 	php_rpc_curl_init(&curl_t);
-	curl_t->open(curl_t,url,10);
+	curl_t->open(curl_t,url,3);
 	curl_multi_t->add(curl_multi_t,curl_t);
 /*
 	php_rpc_curl_t *curl_t;
@@ -184,12 +185,12 @@ int main(int argc,char **argv){
 	curl_t->exec(curl_t);
 	php_rpc_curl_destroy(curl_t);
 */
-	php_rpc_curl_t *curl_a=NULL;
+//	php_rpc_curl_t *curl_a=NULL;
 	
 	char url2[]="http://www.baidu.com";
-	php_rpc_curl_init(&curl_a);
-	curl_t->open(curl_a,url2,10);
-	curl_multi_t->add(curl_multi_t,curl_a);
+	php_rpc_curl_init(&curl_t);
+	curl_t->open(curl_t,url2,3);
+	curl_multi_t->add(curl_multi_t,curl_t);
 
 	curl_multi_t->exec(curl_multi_t);
 	curl_multi_t->close(curl_multi_t);
