@@ -78,7 +78,7 @@ struct _php_rpc_curl_list{
 	php_rpc_curl_t *curl_p;
 	php_rpc_curl_list *next;
 };
-void php_rpc_curl_init(php_rpc_curl_t **curl_t);
+php_rpc_curl_t *php_rpc_curl_init();
 void php_rpc_curl_open(php_rpc_curl_t *curl_t,char *url,int timeout);
 void php_rpc_curl_setopt(php_rpc_curl_t *,CURLoption op,void *val);
 void php_rpc_curl_exec(php_rpc_curl_t *);

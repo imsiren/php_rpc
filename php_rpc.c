@@ -1,17 +1,18 @@
 #include "php_rpc.h"
 /************************CURL EASY********************/
-void php_rpc_curl_init(php_rpc_curl_t **curl_t){
+php_rpc_curl_t *php_rpc_curl_init(){
 	//if(*curl_t==NULL){
-		(*curl_t)=(php_rpc_curl_t*)malloc(sizeof(php_rpc_curl_t));
-		(*curl_t)->open=php_rpc_curl_open;
-		(*curl_t)->setopt=php_rpc_curl_setopt;
-		(*curl_t)->exec=php_rpc_curl_exec;
+		php_rpc_curl_t *curl_t=NULL;
+		(curl_t)=(php_rpc_curl_t*)malloc(sizeof(php_rpc_curl_t));
+		(curl_t)->open=php_rpc_curl_open;
+		(curl_t)->setopt=php_rpc_curl_setopt;
+		(curl_t)->exec=php_rpc_curl_exec;
 
 
 		php_rpc_data_t *data=NULL;
 		CURL *cp=NULL;
 		data=(php_rpc_data_t*)malloc(sizeof(php_rpc_data_t));
-		(*curl_t)->data=data;
+		(curl_t)->data=data;
 		cp=curl_easy_init();
 		data->cp=cp;
 		{
@@ -22,6 +23,7 @@ void php_rpc_curl_init(php_rpc_curl_t **curl_t){
 			curl_easy_setopt(data->cp,CURLOPT_WRITEDATA,&data);	
 		}
 //	}			
+	return curl_t;
 }
 void php_rpc_curl_destroy(php_rpc_curl_t *curl_t){
 	php_rpc_data_t *data=curl_t->data;
@@ -127,8 +129,8 @@ void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){
 		int queue=0;	
 		CURLMsg *msg=NULL;
 		while((msg=curl_multi_info_read(curl_multi_data->cm,&queue))){
-			if(msg==NULL){
-
+			if(msg->msg==CURLMSG_DONE){
+				perror("perform ok");
 			}
 		}
 
@@ -175,7 +177,7 @@ int main(int argc,char **argv){
 	php_rpc_curl_multi_init(&curl_multi_t);
 
 	php_rpc_curl_t *curl_t=NULL;
-	php_rpc_curl_init(&curl_t);
+	curl_t=php_rpc_curl_init();
 	curl_t->open(curl_t,url,3);
 	curl_multi_t->add(curl_multi_t,curl_t);
 /*
@@ -188,7 +190,7 @@ int main(int argc,char **argv){
 //	php_rpc_curl_t *curl_a=NULL;
 	
 	char url2[]="http://www.baidu.com";
-	php_rpc_curl_init(&curl_t);
+	curl_t=php_rpc_curl_init();
 	curl_t->open(curl_t,url2,3);
 	curl_multi_t->add(curl_multi_t,curl_t);
 
