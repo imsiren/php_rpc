@@ -6,6 +6,7 @@
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>
+//#include <php_smart_str.h>
 #define PHP_RPC_EPOLL 
 #define MAX_EPOLL_EVENTS 50
 #ifdef PHP_RPC_EPOLL
@@ -25,6 +26,13 @@ typedef struct _php_rpc_curl_list php_rpc_curl_list;
 		(desc)=(php_rpc_curl_list*)malloc(sizeof(php_rpc_curl_list));	\
 		(desc)->next=NULL;\
 		(desc)->curl_p=NULL;\
+}while(0);
+
+#define PHP_RPC_LIST_FIND(desc,sh,p) do{\
+		(p)=(desc);\
+		while(p && p->curl_p!=sh){\
+			p=p->next;\
+		}\
 }while(0);
 
 #define PHP_RPC_LIST_APPEND(desc,src) do{\

@@ -84,6 +84,7 @@ void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){
 	struct timeval tv;
 	tv.tv_sec=1;
 	tv.tv_usec=0;
+	php_rpc_curl_list *current_ls=0;
 	#ifdef PHP_RPC_EPOLL
 		struct epoll_event ev,*events;//[MAX_EPOLL_EVENTS];	
 		int epoll_fd,nfds;
@@ -130,7 +131,8 @@ void php_rpc_curl_multi_exec(php_rpc_curl_multi_t *curl_multi_t){
 		CURLMsg *msg=NULL;
 		while((msg=curl_multi_info_read(curl_multi_data->cm,&queue))){
 			if(msg->msg==CURLMSG_DONE){
-				perror("perform ok");
+				//PHP_RPC_LIST_FIND(curl_multi_data->list,msg->easy_handle,current_ls);	
+
 			}
 		}
 
@@ -158,7 +160,9 @@ int php_rpc_multi_socket(CURL *easy, /*  easy handle */   curl_socket_t s, /*  s
 
 size_t php_rpc_write_handle(char *buf,size_t size,size_t nmemp,void *userp){
 	size_t len=size*nmemp;
-	printf("%s\n",buf);
+	php_rpc_data_t *data=(php_rpc_data_t*)userp;
+printf("%s\n",buf);
+//	smart_str_appendl(&data->buf,buf,len);
 	return len;
 }
 void php_rpc_list_destroy(php_rpc_curl_list *list){
